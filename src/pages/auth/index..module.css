@@ -1,0 +1,17 @@
+.card {
+  margin: 20px 12px 20px 12px;
+  max-width: 600px;
+  background: #fff;
+  padding: 36px 40px 36px 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px 5px rgba(0, 0, 0, 0.15);
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.textUnderline {
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=index..module.css.map */

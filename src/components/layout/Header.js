@@ -42,7 +42,7 @@ const Header = ({ logoutUser, history }) => {
               <Nav className={HeaderStyles.nav} navbar>
                 {user.role === 2 && (
                   <NavItem>
-                    <NavLink href="/my-products/">My Products</NavLink>
+                    <NavLink href="/product/">My Products</NavLink>
                   </NavItem>
                 )}
                 <NavItem>

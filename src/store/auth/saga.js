@@ -17,22 +17,26 @@ import UsersService from "../../services/UsersService";
 
 const loginWithEmailPasswordAsync = async (email, password) => {
   const authUser = await AuthService.login({ password, email });
-  return authUser.data;
+  // return authUser.data;
 };
 
 const signOutAsync = () => {
   return AuthService.signOut();
 };
 
-const registerWithEmailPasswordAsync = (email, password, role) =>
+const registerWithEmailPasswordAsync = (
+  email,
+  password,
+  firstName,
+  lastName,
+  role
+) =>
   AuthService.register({
     email,
     password,
+    firstName,
+    lastName,
   });
-
-const getProfileAsync = async (myID) => {
-  return UsersService.getProfile(myID);
-};
 
 function* loginUser({ payload: { user, history } }) {
   try {
@@ -42,13 +46,7 @@ function* loginUser({ payload: { user, history } }) {
       user.password
     );
     yield put(loginSuccess(response));
-    /*
-    if (response.user) {
-      history.push("/all-products/");
-    } else {
-      history.push("/");
-    }
-     */
+    history.push("/all-products");
   } catch (error) {
     ToastrService.error(error.message);
     yield put(loginError());
@@ -67,36 +65,26 @@ function* logoutUser({ payload: { history } }) {
 }
 
 function* signUpUser({ payload }) {
-  const { email, password } = payload.user;
+  const { email, password, firstName, lastName } = payload.user;
   const { history } = payload;
   try {
     const response = yield call(
       registerWithEmailPasswordAsync,
       email,
-      password
+      password,
+      firstName,
+      lastName
     );
+
     yield put(registerUserSuccess(response));
-    /*
-    if (response.user) {
+    if (!!response.data.email) {
       history.push("/all-products/");
     } else {
       history.push("/");
     }
-    */
   } catch (error) {
     ToastrService.error(error.message);
     yield put(registerUserError(error));
-  }
-}
-
-function* getProfile({ payload: { myID } }) {
-  try {
-    const result = yield call(getProfileAsync, myID);
-
-    yield put(getProfileSuccess(result));
-  } catch (error) {
-    ToastrService.error(error.message);
-    yield put(getProfileError());
   }
 }
 

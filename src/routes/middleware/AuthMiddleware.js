@@ -1,31 +1,33 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Redirect, Route, withRouter } from "react-router-dom";
-import StorageService from "../../services/StorageService";
 import Header from "../../components/layout/Header";
+import { AuthContext } from "../../Context/AuthContext";
 
-const AuthMiddleware = ({ component: Component, exact = false, roles }) => (
-  <Route
-    exact={exact}
-    render={(props) => {
-      const user = StorageService.user.value;
-      const session = StorageService.session.value;
+const AuthMiddleware = ({ component: Component, exact = false, roles }) => {
+  const { isAuth } = useContext(AuthContext);
+  console.log("isAuth in middleware", isAuth);
 
-      if (!!user && session.accessToken && roles.includes(user.role)) {
+  return (
+    <Route
+      exact={exact}
+      render={(props) => {
+        if (isAuth) {
+          return (
+            <>
+              <Header />
+              <Component {...props} />
+            </>
+          );
+        }
+
         return (
-          <>
-            <Header />
-            <Component {...props} />
-          </>
+          <Redirect
+            to={{ pathname: "/sign-up", state: { from: props.location } }}
+          />
         );
-      }
-
-      return (
-        <Redirect
-          to={{ pathname: "/sign-in", state: { from: props.location } }}
-        />
-      );
-    }}
-  />
-);
+      }}
+    />
+  );
+};
 
 export default withRouter(AuthMiddleware);

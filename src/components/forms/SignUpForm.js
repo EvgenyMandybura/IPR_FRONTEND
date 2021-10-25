@@ -8,38 +8,24 @@ import * as yup from "yup";
 import FormikFormGroup from "../formik/FormikFormGroup";
 import { Formik } from "formik";
 import validationSchemas from "../../constants/validationSchemas";
-import userRoles from "../../constants/userRoles";
-import Axios from "axios";
+// import userRoles from "../../constants/userRoles";
 
 const validationSchema = yup.object({
-  username: validationSchemas.username,
   email: validationSchemas.email,
   password: validationSchemas.password,
 });
 
 const initialValues = {
-  username: "",
+  firstName: "",
+  lastName: "",
   email: "",
   password: "",
-  role: 1,
+  //  role: 1,
 };
 
 const SignUpForm = ({ registerUser, history }) => {
   const handleSubmitForm = (values) => {
-    //   registerUser(values, history);
-
-    const user = {
-      firstName: "first 13",
-      lastName: "last 13",
-      email: "rus@gmail.com",
-      password: "13Qwer!",
-    };
-
-    Axios.post("/api/auth/signup", user)
-      .then(() => {
-        console.log("Succes");
-      })
-      .catch((err) => console.log(err));
+    registerUser(values, history);
   };
 
   return (
@@ -64,9 +50,16 @@ const SignUpForm = ({ registerUser, history }) => {
               <FormikFormGroup
                 errors={errors}
                 touched={touched}
-                fieldName={"username"}
-                label={"Username"}
-                placeholder={"Enter username"}
+                fieldName={"firstName"}
+                label={"First Name"}
+                placeholder={"Enter first name"}
+              />
+              <FormikFormGroup
+                errors={errors}
+                touched={touched}
+                fieldName={"lastName"}
+                label={"Last Name"}
+                placeholder={"Enter Last Name"}
               />
               <FormikFormGroup
                 type={"email"}
@@ -84,22 +77,12 @@ const SignUpForm = ({ registerUser, history }) => {
                 placeholder={"Enter password"}
                 type={"password"}
               />
-              <FormikFormGroup
-                errors={errors}
-                touched={touched}
-                fieldName={"role"}
-                label={"User Role"}
-                placeholder={"Select role"}
-                options={userRoles}
-                setFieldTouched={setFieldTouched}
-                setFieldValue={setFieldValue}
-                type={"select"}
-              />
               <div className="d-flex justify-content-center align-items-center">
                 <Button
                   color="dark"
                   className="w-100 mt-3 p-3 text-uppercase"
                   size="lg"
+                  type="submit"
                 >
                   Continue
                 </Button>

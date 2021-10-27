@@ -4,8 +4,7 @@ import StorageService from "./StorageService";
 import STATUS_CODE from "../constants/statusCodes";
 import { AUTH, LANGUAGE, SKIP_AUTH } from "../constants/headers";
 
-
-
+/*
 const interceptorsResponse = [
   (response) => response.data,
   (error) => {
@@ -42,7 +41,7 @@ function logoutAndRedirect() {
   StorageService.user.clear();
   StorageService.session.clear();
 }
-
+*/
 const interceptorsRequest = [
   (request) => {
     const pattern = /^((http|https):\/\/s3)/;

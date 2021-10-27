@@ -1,17 +1,17 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Redirect, Route, withRouter } from "react-router-dom";
 import Header from "../../components/layout/Header";
-import { AuthContext } from "../../Context/AuthContext";
+import StorageService from "../../services/StorageService";
 
 const AuthMiddleware = ({ component: Component, exact = false, roles }) => {
-  const { isAuth } = useContext(AuthContext);
-  console.log("isAuth in middleware", isAuth);
 
   return (
     <Route
       exact={exact}
       render={(props) => {
-        if (isAuth) {
+          const user = StorageService.user.value;
+          const accessToken = StorageService.session.value;
+          if (!!user && !!accessToken ) {
           return (
             <>
               <Header />
@@ -22,7 +22,7 @@ const AuthMiddleware = ({ component: Component, exact = false, roles }) => {
 
         return (
           <Redirect
-            to={{ pathname: "/sign-up", state: { from: props.location } }}
+            to={{ pathname: "/sign-in", state: { from: props.location } }}
           />
         );
       }}

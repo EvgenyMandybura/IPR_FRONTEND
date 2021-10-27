@@ -48,7 +48,7 @@ function* loginUser({ payload: { user, history } }) {
     yield put(loginSuccess(response));
     history.push("/all-products");
   } catch (error) {
-    ToastrService.error(error.message);
+    ToastrService.error(error);
     yield put(loginError());
   }
 }
@@ -78,7 +78,7 @@ function* signUpUser({ payload }) {
 
     yield put(registerUserSuccess(response));
     if (!!response.data.email) {
-      history.push("/all-products/");
+      history.push("/all-products");
     } else {
       history.push("/");
     }

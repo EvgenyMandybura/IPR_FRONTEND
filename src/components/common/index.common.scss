@@ -1,27 +1,13 @@
 .product {
-  margin: 8px 8px 8px 8px;
 
-  &Img {
-    border: none;
-    padding: 0 8px 24px 8px;
-  }
+  &Card {
+    width: 350px;
+    display: inline-block;
+    margin: 8px;
 
-  &ProviderInfo {
-    margin-top: 12px;
-    text-align: center;
-    padding: 0 8px 8px 8px;
-  }
-
-  &Description {
-    margin-bottom: 24px;
-  }
-
-  &Avatar {
-    padding: 24px;
-    border-radius: 50%;
-    overflow: hidden;
-    display: flex;
-    object-fit: cover;
+    &Img {
+      max-height: 300px !important;
+    }
   }
 }
 
@@ -33,3 +19,5 @@
   border: none;
   margin: 10px 0 5px 0;
 }
+
+

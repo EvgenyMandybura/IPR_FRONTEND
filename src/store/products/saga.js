@@ -5,10 +5,13 @@ import {
   getListProductsSuccess,
   getProductSuccess,
   getProductError,
+  createProductSuccess,
+  createProductError,
 } from "./actions";
-import { GET_LIST_PRODUCTS, GET_PRODUCT } from "./actionTypes";
+import { GET_LIST_PRODUCTS, GET_PRODUCT, CREATE_PRODUCT } from "./actionTypes";
 
 import ProductsService from "../../services/ProductService";
+import ToastrService from "../../services/ToastrService";
 
 const getProductsListAsync = async (url) => {
   return await ProductsService.getAllList(url);
@@ -16,6 +19,10 @@ const getProductsListAsync = async (url) => {
 
 const getProductAsync = async (id) => {
   return await ProductsService.getProduct(id);
+};
+
+const createProductAsync = async (model) => {
+  return await ProductsService.createProduct(model);
 };
 
 function* getProductsList({ payload: { url } }) {
@@ -36,6 +43,16 @@ function* getProduct({ payload: { productId } }) {
   }
 }
 
+function* createProduct({ payload: model }) {
+  try {
+    const response = yield call(createProductAsync, model);
+    yield put(createProductSuccess(response));
+  } catch (error) {
+    ToastrService.error(error.message);
+    yield put(createProductError());
+  }
+}
+
 export function* watchGetProductsList() {
   yield takeEvery(GET_LIST_PRODUCTS, getProductsList);
 }
@@ -44,8 +61,16 @@ export function* watchGetProduct() {
   yield takeEvery(GET_PRODUCT, getProduct);
 }
 
+export function* watchCreateProduct() {
+  yield takeEvery(CREATE_PRODUCT, createProduct);
+}
+
 function* productsSaga() {
-  yield all([fork(watchGetProductsList), fork(watchGetProduct)]);
+  yield all([
+    fork(watchGetProductsList),
+    fork(watchGetProduct),
+    fork(watchCreateProduct),
+  ]);
 }
 
 export default productsSaga;

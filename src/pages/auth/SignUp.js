@@ -1,10 +1,8 @@
 import React from "react";
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
 import SignUpForm from "../../components/forms/SignUpForm";
 import AuthCardContainer from "./ContainerAuth";
 
-const SignUp = ({ authState }) => {
+const SignUp = () => {
   return (
     <AuthCardContainer>
       <SignUpForm />
@@ -12,6 +10,4 @@ const SignUp = ({ authState }) => {
   );
 };
 
-const mapStateToProps = () => ({});
-
-export default withRouter(connect(mapStateToProps)(SignUp));
+export default SignUp;

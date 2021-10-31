@@ -1,9 +1,8 @@
 import React from "react";
-import { connect } from "react-redux";
 import SignInForm from "../../components/forms/SignInForm";
 import AuthCardContainer from "./ContainerAuth";
 
-const SignIn = ({ authState }) => {
+const SignIn = () => {
   return (
     <AuthCardContainer>
       <SignInForm />
@@ -11,6 +10,4 @@ const SignIn = ({ authState }) => {
   );
 };
 
-const mapStateToProps = () => ({});
-
-export default connect(mapStateToProps)(SignIn);
+export default SignIn;

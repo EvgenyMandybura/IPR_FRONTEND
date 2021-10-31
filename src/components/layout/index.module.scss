@@ -6,10 +6,10 @@
   padding-left: 40px;
   padding-right: 40px;
   margin-bottom: 5px;
-}
 
-.cropdownitem {
-  background-color: black;
+  &Btn{
+    margin-right: 8px;
+  }
 }
 
 .containerUser {
@@ -28,4 +28,11 @@
     border: 1px double lightgray;
     border-radius: 8px;
   }
+
+  &Name {
+    font-color: white;
+    margin-right: 15px;
+  }
 }
+
+

@@ -21,7 +21,6 @@ const initialValues = {
 const SignInForm = ({ loginUser, history }) => {
   const handleSubmitForm = (values) => {
     loginUser(values, history);
-  //  setIsAuth(true);
   };
 
   return (
@@ -57,8 +56,8 @@ const SignInForm = ({ loginUser, history }) => {
                 <Button
                   color="dark"
                   type="submit"
-                  className="w-100 mt-3 p-3 text-uppercase"
-                  size="lg"
+                  className="w-100 mt-3 p-3 mb-3 text-uppercase"
+                  size="md"
                 >
                   Sign In
                 </Button>

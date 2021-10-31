@@ -18,33 +18,29 @@ class AuthService extends Http {
       .then((user) => {
         this.storeUser(user);
         return user;
-        console.log("Success login", user);
       })
       .catch((err) => {
-        console.log("err", err);
+        return err;
       });
   }
 
   signOut() {
-    return this.delete("/sessions").then(() => {
-      this.clearUser();
-    });
+    return this.clearUser();
   }
 
   register(model) {
     this.clearUser();
     return this.post("/auth/signup", model)
       .then((user) => {
-      this.storeUser(user);
-      console.log("Success register", user);
-      return user;
-    })
+        this.storeUser(user);
+        return user;
+      })
       .catch((err) => {
-        console.log("err", err);
+        return err;
       });
   }
 
-  storeUser(userData, ) {
+  storeUser(userData) {
     const { user, token } = userData.data;
     const storage = sessionStorage;
     StorageService.user.storage = storage;

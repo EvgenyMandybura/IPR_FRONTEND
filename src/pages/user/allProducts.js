@@ -5,11 +5,9 @@ import StylesProducts from "./index.module.scss";
 const AllProductsPage = () => {
   return (
     <div className={StylesProducts.products}>
-      <h1>All Products Lists</h1>
+      <AllProductsLists />
     </div>
   );
 };
 
 export default AllProductsPage;
-
-//    <AllProductsLists />

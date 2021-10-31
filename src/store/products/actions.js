@@ -7,6 +7,9 @@ import {
   GET_PRODUCT_CLEAR,
   GET_PRODUCT_ERROR,
   GET_PRODUCT_SUCCESS,
+  CREATE_PRODUCT,
+  CREATE_PRODUCT_SUCCESS,
+  CREATE_PRODUCT_ERROR,
 } from "./actionTypes";
 
 export const getListProducts = (url) => {
@@ -59,3 +62,22 @@ export const clearProductFetched = () => {
     type: GET_PRODUCT_CLEAR,
   };
 };
+
+export const createProduct = (product) => {
+  return {
+    type: CREATE_PRODUCT,
+    payload: product,
+  };
+};
+
+export const createProductSuccess = (product) => {
+  return {
+    type: CREATE_PRODUCT_SUCCESS,
+    payload: product,
+  };
+};
+
+export const createProductError = ({ message }) => ({
+  type: CREATE_PRODUCT_ERROR,
+  payload: { message },
+});

@@ -7,6 +7,9 @@ import {
   GET_PRODUCT_CLEAR,
   GET_PRODUCT_ERROR,
   GET_PRODUCT_SUCCESS,
+  CREATE_PRODUCT,
+  CREATE_PRODUCT_SUCCESS,
+  CREATE_PRODUCT_ERROR,
 } from "./actionTypes";
 import { DEFAULT_OFFSET } from "../../constants/pagination";
 
@@ -16,7 +19,6 @@ const initialState = {
   error: "",
   loading: false,
   loadedImage: true,
-  removed: false,
   url: "",
 };
 
@@ -74,6 +76,26 @@ const products = (state = initialState, action) => {
       state = {
         ...state,
         item: null,
+        loading: false,
+      };
+      break;
+
+    case CREATE_PRODUCT:
+      state = {
+        ...state,
+        loading: true,
+      };
+      break;
+    case CREATE_PRODUCT_SUCCESS:
+      state = {
+        ...state,
+        created: action.payload,
+        loading: false,
+      };
+      break;
+    case CREATE_PRODUCT_ERROR:
+      state = {
+        ...state,
         loading: false,
       };
       break;

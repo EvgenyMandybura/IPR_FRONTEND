@@ -36,13 +36,7 @@ const SignUpForm = ({ registerUser, history }) => {
         onSubmit={handleSubmitForm}
       >
         {(form) => {
-          const {
-            errors,
-            touched,
-            handleSubmit,
-            setFieldTouched,
-            setFieldValue,
-          } = form;
+          const { errors, touched, handleSubmit } = form;
 
           return (
             <Form className="w-100" onSubmit={handleSubmit}>

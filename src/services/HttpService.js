@@ -1,19 +1,24 @@
 import axios from "axios";
-
 import StorageService from "./StorageService";
 
-function logoutAndRedirect() {
-  let location = window.location;
-  location.href = location.origin + "/logout";
-  StorageService.user.clear();
-  StorageService.session.clear();
-}
+const interceptorsRequest = (request) => {
+  if (!!StorageService.session.value) {
+    request.headers = {
+      authorization: `Bearer ${StorageService.session.value}`,
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    };
+  }
+  return request;
+};
 
 class Http {
   constructor() {
     this.instance = Http.createInstance({
       baseURL: `/api/`,
     });
+
+    this.instance.interceptors.request.use(interceptorsRequest);
   }
 
   static createInstance() {

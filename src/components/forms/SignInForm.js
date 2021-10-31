@@ -8,7 +8,6 @@ import * as yup from "yup";
 import FormikFormGroup from "../formik/FormikFormGroup";
 import { Formik } from "formik";
 import validationSchemas from "../../constants/validationSchemas";
-import { AuthContext } from "../../Context/AuthContext";
 
 const validationSchema = yup.object({
   email: validationSchemas.email,
@@ -20,25 +19,8 @@ const initialValues = {
 };
 
 const SignInForm = ({ loginUser, history }) => {
-  const { setIsAuth, setUserData, isAuth } = useContext(AuthContext);
-
   const handleSubmitForm = (values) => {
     loginUser(values, history);
-    setIsAuth(true);
-    console.log("isAuth in Sign in form", isAuth);
-    /*
-    console.log(values);
-    Axios.post("/api/auth/login", values)
-      .then((user) => {
-        //        setIsAuth(true);
-        //      setUserData(user.data);
-        console.log(user.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-      
-     */
   };
 
   return (
@@ -74,8 +56,8 @@ const SignInForm = ({ loginUser, history }) => {
                 <Button
                   color="dark"
                   type="submit"
-                  className="w-100 mt-3 p-3 text-uppercase"
-                  size="lg"
+                  className="w-100 mt-3 p-3 mb-3 text-uppercase"
+                  size="md"
                 >
                   Sign In
                 </Button>

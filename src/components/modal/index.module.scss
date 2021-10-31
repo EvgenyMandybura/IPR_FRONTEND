@@ -1,0 +1,23 @@
+.modal {
+  &body {
+    padding: 36px;
+  }
+
+  &Btn {
+    position: relative;
+    width: 36px !important;
+    height: 36px;
+    float: right;
+  }
+
+  &Card{
+    padding: 48px;
+    border: none;
+    text-align: center;
+  }
+
+  &Img {
+    height: 600px;
+    margin-bottom: 16px;
+  }
+}

@@ -8,7 +8,11 @@ class ProductsService extends Http {
   }
 
   getAllList(urlRequest) {
-    return this.get(`${this.BASE_URL}?${urlRequest}`);
+    return this.get(`${this.BASE_URL}`);
+  }
+
+  createProduct(model) {
+    return this.post(`${this.BASE_URL}`, model.values);
   }
 }
 

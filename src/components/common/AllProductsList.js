@@ -2,27 +2,17 @@ import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { Row, Col } from "reactstrap";
-import {
-  Container,
-  Button,
-  CardBody,
-  CardImg,
-  Card,
-  CardTitle,
-  CardSubtitle,
-} from "reactstrap";
+import { Container, CardImg, Card } from "reactstrap";
 
 import {
   getListProducts,
   getListProductsClear,
 } from "../../store/products/actions";
-import { DEFAULT_LIMIT, DEFAULT_OFFSET } from "../../constants/pagination";
+import StorageService from "../../services/StorageService";
+import ProductDetailsModal from "../modal/productDetails";
+import useModal from "../../hooks/useModal.";
 import styles from "./index.common.scss";
 import imgPlaceholder from "../../assets/ic-placeholder.svg";
-// import ToogleContainer from "./Toogle";
-// import Search from "../forms/SearchForm";
-// import SortProductsForm from "../forms/SortForm";
-// import FilterProductsForm from "../forms/FilterProducts";
 
 const AllProductsLists = ({
   allProductsState,
@@ -30,12 +20,10 @@ const AllProductsLists = ({
   getListProductsClear,
   history,
 }) => {
-  const { data, url } = allProductsState;
   const [ready, updateReady] = useState(false);
-  const [limit, setlimit] = useState(DEFAULT_LIMIT);
-
+  const user = StorageService.user.value;
   const fetchProducts = () => {
-    getListProducts(`${url}&limit=${limit}&offset=${DEFAULT_OFFSET}`);
+    getListProducts(null);
   };
 
   useEffect(() => {
@@ -46,38 +34,42 @@ const AllProductsLists = ({
     };
   }, []);
 
+  const [modalVisible, toggleModal] = useModal();
+
+  const [currentProductID, setCurrentProductID] = useState(null);
+
+  const onClickProduct = (id) => {
+    setCurrentProductID(id);
+    toggleModal();
+  };
+
   return (
     <Container>
-      <Row className="text-center">
+      <Row>
         <Col lg="12" className="text-center">
           {ready &&
-            data != "" &&
-            data.map((product) => (
+            allProductsState.data?.map((product) => (
               <Card
-                className={styles.cardWidth}
-                onClick={() => history.push(`/product-details/${product.id}`)}
+                className="productCard"
+                onClick={() =>
+                  !!user ? onClickProduct(product.id) : history.push(`/sign-in`)
+                }
                 key={product.id}
               >
                 <CardImg
-                  src={product.image ? product.image.original : imgPlaceholder}
+                  src={!!product.imgUrl ? product.imgUrl : imgPlaceholder}
                   alt="Card image"
+                  className="productCardImg"
                 />
-                <CardBody>
-                  <CardTitle tag="h5">{product.title}</CardTitle>
-                  <CardSubtitle tag="h6" className="mb-2 text-muted">
-                    {product.price}
-                  </CardSubtitle>
-                  <Button color="dark">Button</Button>
-                </CardBody>
               </Card>
             ))}
         </Col>
-        <Col lg={{ size: 9, offset: 3 }}>
-          <Button outline color="dark">
-            Show more
-          </Button>
-        </Col>
       </Row>
+      <ProductDetailsModal
+        isOpen={modalVisible}
+        onCancel={toggleModal}
+        productId={currentProductID}
+      />
     </Container>
   );
 };
